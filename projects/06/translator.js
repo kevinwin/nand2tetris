@@ -52,7 +52,7 @@ const jumps = {
 };
 
 module.exports = {
-    translateComputation: key => computations[key],
-    translateDestination: key => destinations[key],
-    translateJump: key => jumps[key]
+    translateComputation: identifier => computations[identifier],
+    translateDestination: identifier => destinations[identifier],
+    translateJump: identifier => jumps[identifier]
 };
