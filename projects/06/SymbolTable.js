@@ -34,7 +34,7 @@ class SymbolTable {
     }
 
     get(symbol) {
-        return predefined.hasOwnProperty(symbol) ? predifined[symbol] : this.map.get(symbol);
+        return predefined.hasOwnProperty(symbol) ? predefined[symbol] : this.map.get(symbol);
     }
 
     set(symbol, address) {
