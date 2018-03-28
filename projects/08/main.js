@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const {bootstrap, translate} = require('./vm');
+const {bootstrap, convert} = require('./vm');
 
 const vmPath = process.argv[2];
 const isDirectory = fs.lstatSync(vmPath).isDirectory();
@@ -17,7 +17,7 @@ for (const vmPath of vmPaths) {
 
     hasSysInit = hasSysInit || /^\s*function\s+Sys\.init\s+0\s*$/m.test(vmCode);
 
-    const asm = translate(prefix, vmCode);
+    const asm = convert(prefix, vmCode);
     asms.push(asm);
 }
 
