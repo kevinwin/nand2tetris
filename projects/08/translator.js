@@ -109,7 +109,7 @@ function translatePop(prefix, segment, index) {
         }
         default:
             return [
-                `@${symbols[segment]}`, 'D=M', `@${index}`, 'D=D+A', '$13', 'M=D',
+                `@${symbols[segment]}`, 'D=M', `@${index}`, 'D=D+A', '@R13', 'M=D',
                 ...popDCommands, '@R13', 'A=M', 'M=D'
             ];
     }
@@ -142,7 +142,7 @@ function translateCall(name, numArguments) {
 function translateBootstrap() {
     return [
         '@256', 'D=A', '@0', 'M=D',
-        ...translateCall('Sys.init', 0);
+        ...translateCall('Sys.init', 0)
     ];
 }
 
