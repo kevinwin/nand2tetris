@@ -1,4 +1,4 @@
-const parse = require('.parser');
+const parse = require('./parser');
 const translate = require('./translator');
 
 function bootstrap() {
@@ -11,7 +11,7 @@ function convert(prefix, vmCode) {
 
     for (const line of lines) {
         const command = parse(line);
-        translatedLines.push(...translate(prefix, command));
+        command && translatedLines.push(...translate(prefix, command));
     }
 
     return translatedLines.join('\n');
