@@ -118,7 +118,7 @@ function translatePop(prefix, segment, index) {
 function translateFunction(name, numLocals) {
     const lines = [`(${name})`];
     for (let i = 0; i < numLocals; i++) {
-        lines.push(...push0);
+        lines.push(...push0Commands);
     }
 
     return lines;
