@@ -184,6 +184,8 @@ function parseOptionalStatement(tokens, tokenIndex) {
             case 'return': return parseReturnStatement(tokens, tokenIndex);
         }
     }
+
+    return {node: null, nextTokenIndex: tokenIndex};
 }
 
 function parseLetStatement(tokens, tokenIndex) {
@@ -236,7 +238,7 @@ function parseIfStatement(tokens, tokenIndex) {
     children.push(tokens[tokenIndex++]); // }
 
     if (isKeyword(tokens[tokenIndex], 'else')) {
-//        children.push(tokens[tokenIndex++]); // else
+        children.push(tokens[tokenIndex++]); // else
         children.push(tokens[tokenIndex++]); // {
 
         const statements = parseStatements(tokens, tokenIndex);
@@ -284,7 +286,7 @@ function parseDoStatement(tokens, tokenIndex) {
 
     const methodCall = parseOptionalMethodCall(tokens, tokenIndex);
     if (methodCall.siblings) {
-        children.push(...methodCall.sibling);
+        children.push(...methodCall.siblings);
         tokenIndex = methodCall.nextTokenIndex;
     }
 
