@@ -17,5 +17,5 @@ source.forEach((jackFile, i) => {
   // write to destination
   fs.writeFileSync(destinations[i], vm, {encoding: 'utf8'});
 
-  console.log(`Wrote ${jackFile} to ${destinations[i]}`);
+  console.log(`Converted ${jackFile} to ${destinations[i]}`);
 });
