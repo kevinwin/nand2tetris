@@ -61,7 +61,7 @@ function getNextToken(jack, start) {
         };
     }
 
-    if (char === '""') {
+    if (char === '"') {
         const endDoubleQuotePosition = jack.indexOf('"', start + 1);
         return {
             token: {type: 'stringConstant', value: jack.slice(start + 1, endDoubleQuotePosition)},
