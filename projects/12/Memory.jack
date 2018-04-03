@@ -9,26 +9,76 @@
  * consists of 32,768 words, each holding a 16-bit binary number.
  */ 
 class Memory {
+    static int headSegmentAddress; // First free segment address
 
     /** Initializes the class. */
     function void init() {
+        let headSegmentAddress = 2048; // heap starts at address 2048
+        do Memory.poke(headSegmentAddress, 14336);
+        do Memory.poke(headSegmentAddress + 1, -1);
+        return;
     }
 
     /** Returns the RAM value at the given address. */
     function int peek(int address) {
+        var Array memory;
+        let memory = 0;
+        return memory[address];
     }
 
     /** Sets the RAM value at the given address to the given value. */
     function void poke(int address, int value) {
+        var Array memory;
+        let memory = 0;
+        let memory[address] = value;
+        return;
     }
 
     /** Finds an available RAM block of the given size and returns
      *  a reference to its base address. */
     function int alloc(int size) {
+        var int previous, current, currentLength, next;
+
+        let previous = -1;
+        let current = headSegmentAddress;
+        let currentLength = Memory.peek(current);
+
+        while (currentLength < (size + 1)) {
+            let previous = current;
+            let current = Memory.peek(current + 1);
+            let currentLength = Memory.peek(current);
+        }
+
+        if (currentLength < (size + 2)) {
+            let next = Memory.peek(current + 1);
+
+            // Have size take entire available space minus word used for storing segment length
+            let size = current - 1;
+        } else {
+            let next = current + size + 1;
+            do Memory.poke(next, currentLength - size - 1);
+        }
+
+        // Link previous to next/new segment
+        if (previous = -1) {
+            let headSegmentAddress = next;
+        } else {
+            do Memory.poke(previous + 1, next);
+        }
+
+        do Memory.poke(current, size + 1);
+        return current + 1;
     }
 
     /** De-allocates the given object (cast as an array) by making
      *  it available for future allocations. */
-    function void deAlloc(Array o) {
+    function void deAlloc(Array object) {
+        var int address;
+        let address = object - 1;
+        
+        do Memory.poke(address + 1, headSegmentAddress);
+        let headSegmentAddress = address; 
+
+        return;
     }    
 }
